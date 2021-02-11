@@ -1,0 +1,25 @@
+{
+  "name": "webhid-elgato-stream-deck-daft-punk-soundboard",
+  "version": "1.0.0",
+  "description": "WebHID Demo: Elgato Stream Deck Daft Punk Soundboard",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "snowpack dev",
+    "build": "snowpack build"
+  },
+  "keywords": [
+    "webhid",
+    "elgato",
+    "streamdeck"
+  ],
+  "author": {
+    "name": "Bramus Van Damme",
+    "email": "bramus@bram.us",
+    "twitter": "@bramus",
+    "web": "https://www.bram.us/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "snowpack": "^3.0.11"
+  }
+}
