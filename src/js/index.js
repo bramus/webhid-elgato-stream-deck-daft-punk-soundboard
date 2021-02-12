@@ -177,35 +177,40 @@ const buttonConfig = [
 	},
 ];
 
-const drumPad = new DrumPad(buttonConfig, document.querySelector("#app"));
+const go = async () => {
 
-if (navigator.hid) {
-	const streamDeck = new StreamDeck();
+	const drumPad = new DrumPad(buttonConfig, document.querySelector("#app"));
+	await drumPad.init();
 
-	const connectStreamDeck = async () => {
-		// Connect to previously connected device
-		await streamDeck.connect();
+	if (navigator.hid) {
+		const streamDeck = new StreamDeck();
 
-		// A previously connected device was found
-		if (streamDeck.isConnected) {
-			drumPad.attachStreamDeck(streamDeck);
-		}
+		const connectStreamDeck = async () => {
+			// Connect to previously connected device
+			await streamDeck.connect();
 
-		// No Previously connected device was found
-		else {
-			// Add button to connect new device
-			const elem = document.createElement("button");
-			elem.type = "button";
-			elem.innerText = "Connect StreamDeck";
-			elem.style = "position: absolute;top: 100px;left:100px;z-index:100";
-			elem.addEventListener("click", async () => {
-				elem.remove();
-				await streamDeck.connect(true);
+			// A previously connected device was found
+			if (streamDeck.isConnected) {
 				drumPad.attachStreamDeck(streamDeck);
-			});
-			document.body.appendChild(elem);
-		}
-	};
-	
-	connectStreamDeck();
+			}
+
+			// No Previously connected device was found
+			else {
+				// Add button to connect new device
+				const elem = document.createElement("button");
+				elem.type = "button";
+				elem.innerText = "Connect StreamDeck";
+				elem.style = "position: absolute;top: 100px;left:100px;z-index:100";
+				elem.addEventListener("click", async () => {
+					elem.remove();
+					await streamDeck.connect(true);
+					drumPad.attachStreamDeck(streamDeck);
+				});
+				document.body.appendChild(elem);
+			}
+		};
+		
+		connectStreamDeck();
+	}
 }
+go();

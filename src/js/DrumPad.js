@@ -7,9 +7,12 @@ class DrumPad {
 	constructor(buttonConfig, targetNode) {
 		this.targetNode = targetNode;
 		this.buttonConfig = buttonConfig;
+	}
+
+	init = async () => {
 		this.bindEvents();
 		this.render();
-		this.activeButtonPageAtIndex(0);
+		await this.activeButtonPageAtIndex(0);
 	}
 
 	bindEvents = () => {
@@ -32,12 +35,14 @@ class DrumPad {
 
 	}
 		
-	activeButtonPageAtIndex = (pageIndex) => {
+	activeButtonPageAtIndex = async (pageIndex) => {
 		if (pageIndex !== this.activePageIndex) {
 			this.activePageIndex = pageIndex;
-			this.streamDeck && this.streamDeck.clearAllButtons();
 			this.targetNode.setAttribute('data-active-page-index', this.activePageIndex);
-			this.streamDeck && this.drawStreamDeckButtons();
+			if (this.streamDeck) {
+				await this.streamDeck.clearAllButtons();
+				await this.drawStreamDeckButtons();
+			}
 		}
 	};
 
@@ -52,10 +57,10 @@ class DrumPad {
 		$el.play();
 	}
 
-	attachStreamDeck = (streamDeck) => {
+	attachStreamDeck = async (streamDeck) => {
 		this.streamDeck = streamDeck;
 
-		this.streamDeck.clearAllButtons();
+		await this.streamDeck.clearAllButtons();
 
 		this.streamDeck.addEventListener('keydown', (e) => {
 			const $button = document.querySelector(`button[data-page-index="${this.activePageIndex}"][data-button-index="${e.detail.buttonId}"]`);
@@ -65,10 +70,10 @@ class DrumPad {
 			}
 		});
 
-		this.drawStreamDeckButtons();
+		await this.drawStreamDeckButtons();
 	}
 
-	drawTextOnStreamDeckButtonAtIndex = (index, textString, backgroundColor, textColor) => {
+	drawTextOnStreamDeckButtonAtIndex = async (index, textString, backgroundColor, textColor) => {
 		var ICON_SIZE = 72,
 			ICON_SIZE_HALF = ICON_SIZE / 2,
 			canvas = new OffscreenCanvas(ICON_SIZE, ICON_SIZE),
@@ -93,15 +98,15 @@ class DrumPad {
 
 		ctx.fillText(textString , (canvas.width/2) - (textWidth / 2), (canvas.height + fontSize) / 2);
 					
-		this.streamDeck.fillCanvas(index, canvas);
+		await this.streamDeck.fillCanvas(index, canvas);
 	}
 
-	drawStreamDeckButtons() {
-		Object.entries(this.buttonConfig[this.activePageIndex]).forEach(([index, button]) => {	
+	drawStreamDeckButtons = async () => {
+		Object.entries(this.buttonConfig[this.activePageIndex]).forEach(async ([index, button]) => {	
 			if (button.label) {
-				this.drawTextOnStreamDeckButtonAtIndex(index, button.label, button.bgColor ?? 'black', button.textColor ?? 'red');
+				await this.drawTextOnStreamDeckButtonAtIndex(index, button.label, button.bgColor ?? 'black', button.textColor ?? 'red');
 			} else if (button.image) {
-				this.streamDeck.fillURL(index, button.image, true);
+				await this.streamDeck.fillURL(index, button.image, true);
 			}
 		});
 	}
