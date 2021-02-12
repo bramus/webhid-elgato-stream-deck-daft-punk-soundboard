@@ -37,7 +37,6 @@ _💡 Linking the Elgato Stream Deck is a one-time step. Once connected the brow
 ## Known Issues
 
 - The visual feedback when pressing a button does not play nice with multiple successive presses on the same button. This because the CSS used for it is already applied after the first press, and layout won't be triggered after that.
-- For the sounds to play you need to have interacted with the page first. If you don't hear any sounds when pressing the Elgato Stream Deck buttons, first click _(using your mouse)_ somewhere on the soundboard and then retry.
 
 ## Credits
 

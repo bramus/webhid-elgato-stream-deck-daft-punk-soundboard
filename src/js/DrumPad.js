@@ -54,7 +54,9 @@ class DrumPad {
 		}
 
 		$el.currentTime = 0;
-		$el.play();
+		$el.play().catch(error => {
+			alert('Could not play audio. Please interact with the document first by clicking anywhere on the page.');
+		});
 	}
 
 	attachStreamDeck = async (streamDeck) => {
