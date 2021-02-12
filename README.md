@@ -28,11 +28,12 @@ _💡 Note that the sounds are paged and that only sounds from the currently act
 
 1. Plug in the Stream Deck device into your computer.
 1. Make sure the native Stream Deck App is not running. The buttons should show the Elgato Logo.
-1. Enable WebHID by enabling ”Experimental Web Platform Features” through <code>chrome://flags/</code>.
 1. Open the demo and click the “Connect Stream Deck” button.
 1. In the device picker, choose your Stream Deck device and click “Connect”.
 
 _💡 Linking the Elgato Stream Deck is a one-time step. Once connected the browser will remember the connection._
+
+_👨‍🔬 The demo website is registered for [the WebHID Origin Trial](https://developer.chrome.com/origintrials/#/view_trial/1074108511127863297), and therefore WebHID should be enabled by default. If you however don't see a connect button, go to <code>chrome://flags/</code> and manually enable ”Experimental Web Platform Features”._
 
 ## Known Issues
 
