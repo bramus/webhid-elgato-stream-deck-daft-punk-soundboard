@@ -198,7 +198,7 @@ const go = async () => {
 			// Add button to connect new device
 			const elem = document.createElement("button");
 			elem.type = "button";
-			elem.innerText = "Connect StreamDeck";
+			elem.innerText = "Connect Stream Deck";
 			elem.style = "position: absolute;top: 100px;left:100px;z-index:100";
 			elem.addEventListener("click", async () => {
 				elem.remove();
