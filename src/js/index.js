@@ -185,32 +185,28 @@ const go = async () => {
 	if (navigator.hid) {
 		const streamDeck = new StreamDeck();
 
-		const connectStreamDeck = async () => {
-			// Connect to previously connected device
-			await streamDeck.connect();
+		// Connect to previously connected device
+		await streamDeck.connect();
 
-			// A previously connected device was found
-			if (streamDeck.isConnected) {
+		// A previously connected device was found
+		if (streamDeck.isConnected) {
+			drumPad.attachStreamDeck(streamDeck);
+		}
+
+		// No Previously connected device was found
+		else {
+			// Add button to connect new device
+			const elem = document.createElement("button");
+			elem.type = "button";
+			elem.innerText = "Connect StreamDeck";
+			elem.style = "position: absolute;top: 100px;left:100px;z-index:100";
+			elem.addEventListener("click", async () => {
+				elem.remove();
+				await streamDeck.connect(true);
 				drumPad.attachStreamDeck(streamDeck);
-			}
-
-			// No Previously connected device was found
-			else {
-				// Add button to connect new device
-				const elem = document.createElement("button");
-				elem.type = "button";
-				elem.innerText = "Connect StreamDeck";
-				elem.style = "position: absolute;top: 100px;left:100px;z-index:100";
-				elem.addEventListener("click", async () => {
-					elem.remove();
-					await streamDeck.connect(true);
-					drumPad.attachStreamDeck(streamDeck);
-				});
-				document.body.appendChild(elem);
-			}
-		};
-		
-		connectStreamDeck();
+			});
+			document.body.appendChild(elem);
+		}
 	}
 }
 go();
