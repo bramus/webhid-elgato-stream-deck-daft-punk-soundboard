@@ -23,6 +23,13 @@ const buttonConfig = [
 			image: 'img/daftpunk.jpg',
 			width: 600,
 			height: 600,
+			action: function(e) {
+				if (!this.clickCount) this.clickCount = 0;
+				this.clickCount++;
+				if ((this.clickCount >= 5) && (!this.externalWindow || this.externalWindow.closed)) {
+					this.externalWindow = window.open('https://www.youtube.com/watch?v=WSttUkU015s', 'instrumental');
+				}
+			}
 		},
 		5: {
 			label: 'Work It',
