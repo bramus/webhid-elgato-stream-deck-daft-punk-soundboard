@@ -7,6 +7,13 @@ class DrumPad {
 	constructor(buttonConfig, targetNode) {
 		this.targetNode = targetNode;
 		this.buttonConfig = buttonConfig;
+
+		for (const pageConfig of this.buttonConfig) {
+			for (const [buttonIndex, entry] of Object.entries(pageConfig)) {
+				console.log(entry);
+				if (entry.action) entry.action = entry.action.bind(this);
+			}
+		}
 	}
 
 	init = async () => {
@@ -28,7 +35,7 @@ class DrumPad {
 			if (e.target.nodeName == 'BUTTON') {
 				const buttonConfig = this.buttonConfig[e.target.getAttribute('data-page-index')]?.[e.target.getAttribute('data-button-index')] ?? null;
 				if (buttonConfig && buttonConfig.action) {
-					buttonConfig.action.bind(this)(e);
+					buttonConfig.action(e);
 				}
 			}
 		});
